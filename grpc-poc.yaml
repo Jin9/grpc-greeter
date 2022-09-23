@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  
+  server:
+    image: grpc-poc-server
+    ports:
+      - "9090:9090"
+    networks:
+      - grpc-network
+  envoy:
+    image: grpc-poc-envoy
+    ports:
+      - "8080:8080"
+      - "9901:9901"
+    links:
+      - server
+    networks:
+      - grpc-network
+
+networks:
+  grpc-network:
+    driver: bridge
