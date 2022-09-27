@@ -1,3 +1,14 @@
 npx webpack client.js
 
 python3 -m http.server 8081
+
+ghz --insecure \
+  --proto protos/helloworld.proto \
+  --call helloworld.Greeter.SayHello \
+  --format html \
+  --output output/result.html \
+  -n 10000 --rps 200 \
+  --concurrency-schedule=line --concurrency-start=20 --concurrency-step=2 --concurrency-max-duration=30s \
+  -d '{"name":"John"}' \
+  -m '{"trace_id":"{{.RequestNumber}}", "timestamp":"{{.TimestampUnixNano}}"}' \
+  0.0.0.0:9090
